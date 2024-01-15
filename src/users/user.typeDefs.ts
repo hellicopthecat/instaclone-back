@@ -12,5 +12,14 @@ type Query{
     users:[user]!
     user(userName:String!):user
 }
+type Mutation{
+    createUser(
+    userName:String!
+    firstName:String!
+    lastName:String
+    email:String!
+    password:String!
+    ):user
+}
 `;
 export default typeDefs;
