@@ -1,5 +1,5 @@
-const typeDefs = `#graphql
-type user{
+export default `#graphql
+type User{
     id:Int!
     userName:String!
     firstName:String!
@@ -8,18 +8,4 @@ type user{
     createAt:String!
     updatedAt:String!
 }
-type Query{
-    users:[user]!
-    user(userName:String!):user
-}
-type Mutation{
-    createUser(
-    userName:String!
-    firstName:String!
-    lastName:String
-    email:String!
-    password:String!
-    ):user
-}
 `;
-export default typeDefs;
