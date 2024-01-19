@@ -1,8 +1,11 @@
-import {Resolvers} from "../../types";
+import { Resolvers } from '../../types';
 
 export default {
   Query: {
-    user: (_, {userName}, {client}) =>
-      client.user.findUnique({where: {userName}}),
+    user: (_, { userName }, { client }) =>
+      client.user.findUnique({
+        where: { userName },
+        include: { following: true, followers: true },
+      }),
   },
 } as Resolvers;

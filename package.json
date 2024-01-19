@@ -12,10 +12,17 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@types/bcrypt": "^5.0.2",
-    "@types/jsonwebtoken": "^9.0.5",
+    "@types/cors": "^2.8.17",
+    "eslint": "^8.56.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-config-standard-with-typescript": "^43.0.0",
+    "eslint-plugin-import": "^2.29.1",
+    "eslint-plugin-n": "^16.6.2",
+    "eslint-plugin-promise": "^6.1.1",
+    "eslint-plugin-react": "^7.33.2",
     "nodemon": "^3.0.2",
-    "prisma": "^5.8.0",
+    "prettier": "^3.2.2",
+    "prisma": "^5.8.1",
     "typescript": "^5.3.3"
   },
   "dependencies": {
@@ -23,11 +30,18 @@
     "@graphql-tools/load-files": "^7.0.0",
     "@graphql-tools/merge": "^9.0.1",
     "@graphql-tools/schema": "^10.0.2",
-    "@prisma/client": "^5.8.0",
+    "@prisma/client": "^5.8.1",
+    "@types/bcrypt": "^5.0.2",
+    "@types/jsonwebtoken": "^9.0.5",
+    "@types/morgan": "^1.9.9",
+    "@typescript-eslint/eslint-plugin": "^6.19.0",
     "bcrypt": "^5.1.1",
+    "cors": "^2.8.5",
     "dotenv": "^16.3.1",
+    "express": "^4.18.2",
     "graphql": "^16.8.1",
     "jsonwebtoken": "^9.0.2",
+    "morgan": "^1.10.0",
     "ts-node": "^10.9.2"
   }
 }

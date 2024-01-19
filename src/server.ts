@@ -1,20 +1,42 @@
-import dotenv from "dotenv";
+import dotenv from 'dotenv';
 dotenv.config();
-import {ApolloServer} from "@apollo/server";
-import {startStandaloneServer} from "@apollo/server/standalone";
-import {schema} from "./schema";
-import {getUser} from "./users/user.utils";
-import client from "./client";
+import express from 'express';
+import cors from 'cors';
+import http from 'http';
+import { ApolloServer, BaseContext } from '@apollo/server';
+import { expressMiddleware } from '@apollo/server/express4';
+import { ApolloServerPluginDrainHttpServer } from '@apollo/server/plugin/drainHttpServer';
+import { typeDefs, resolvers } from './schema';
+import { getUser } from './users/user.utils';
+import client from './client';
+import morgan from 'morgan';
 
-const server = new ApolloServer({schema});
+const PORT = process.env.PORT;
+const app = express();
+const httpServer = http.createServer(app);
 
-startStandaloneServer(server, {
-  context: async ({req, res}) => {
-    return {
-      loginUserToken: await getUser(req.headers.token),
-      client,
-    };
-  },
-}).then(() => {
-  console.log(`✅ Server is Listen http://localhost:${process.env.PORT}`);
+const server = new ApolloServer<BaseContext>({
+  typeDefs,
+  resolvers,
+  plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
 });
+
+server.start().then(() => {
+  app.use(
+    '/graphql',
+    cors(),
+    morgan('tiny'),
+    express.json(),
+    expressMiddleware(server, {
+      context: async ({ req }) => {
+        return {
+          loginUserToken: await getUser(req.headers.token),
+          client,
+        };
+      },
+    }),
+  );
+});
+app.use('/static', express.static('uploads'));
+httpServer.listen({ port: PORT });
+console.log(`✅ Server is Listen http://localhost:${PORT}/graphql`);

@@ -1,16 +1,16 @@
-import jwt, {JwtPayload} from "jsonwebtoken";
-import client from "../client";
-import {Context, IArgs, Resolver} from "../types";
+import jwt, { JwtPayload } from 'jsonwebtoken';
+import client from '../client';
+import { Context, IArgs, Resolver } from '../types';
 export const getUser = async (token: any) => {
   try {
     if (!token) {
       return null;
     }
-    const {id} = (await jwt.verify(
+    const { id } = (await jwt.verify(
       token,
-      process.env.SECRET_KEY as string
+      process.env.SECRET_KEY as string,
     )) as JwtPayload;
-    const user = client.user.findUnique({where: {id}});
+    const user = client.user.findUnique({ where: { id } });
     if (user) {
       return user;
     } else {
@@ -27,7 +27,7 @@ export const protectResolver =
     if (!context.loginUserToken) {
       return {
         ok: false,
-        error: "로그인하세요.",
+        error: '로그인하세요.',
       };
     }
     return resolvers(root, args, context, info);

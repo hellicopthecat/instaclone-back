@@ -1,4 +1,4 @@
-import {PrismaClient, User} from "@prisma/client";
+import { PrismaClient, User } from '@prisma/client';
 
 export interface IUser {
   id: number;
@@ -17,6 +17,11 @@ export type IArgs = {
   lastName: string;
   email: string;
   password: string;
+  bio: string;
+  avatar: string;
+  page: number;
+  lastId: number;
+  keyword: string;
 };
 export type Context = {
   loginUserToken: User;
@@ -24,10 +29,10 @@ export type Context = {
 };
 
 export type Resolver = (
-  root: any,
+  root: IUser,
   args: IArgs,
   context: Context,
-  info: any
+  info: any,
 ) => any;
 
 export type Resolvers = {
