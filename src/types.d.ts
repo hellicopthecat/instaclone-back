@@ -2,6 +2,7 @@ import { PrismaClient, User } from '@prisma/client';
 
 export interface IUser {
   id: number;
+  userId: number;
   firstName: string;
   lastName?: string;
   password: string;
@@ -12,6 +13,7 @@ export interface IUser {
 }
 
 export type IArgs = {
+  id: number;
   userName: string;
   firstName: string;
   lastName: string;
@@ -22,6 +24,9 @@ export type IArgs = {
   page: number;
   lastId: number;
   keyword: string;
+  caption: string;
+  file: string;
+  hashtag: string;
 };
 export type Context = {
   loginUserToken: User;

@@ -29,5 +29,7 @@ export default {
         .following({ where: { id } });
       return userExists?.length !== 0;
     },
+    photos: ({ id }, _, { client }) =>
+      client.user.findUnique({ where: { id } }).photos(),
   },
 } as Resolvers;

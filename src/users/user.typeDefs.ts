@@ -10,6 +10,7 @@ type User{
     updatedAt:String!
     bio:String
     avatar(file:Upload!):Upload
+    photos:[Photo]
     follower:[User]
     following:[User]
     totalFollowing:Int!
