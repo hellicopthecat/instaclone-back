@@ -1,4 +1,5 @@
 import { PrismaClient, User } from '@prisma/client';
+import { GraphQLResolveInfo } from 'graphql';
 
 export interface IUser {
   id: number;
@@ -11,6 +12,13 @@ export interface IUser {
   createAt: string;
   updatedAt: string;
 }
+export interface IFile {
+  fieldName: string;
+  filename: string;
+  mimetype: string;
+  encoding: string;
+  createReadStream: () => any;
+}
 
 export type IArgs = {
   id: number;
@@ -20,13 +28,15 @@ export type IArgs = {
   email: string;
   password: string;
   bio: string;
-  avatar: string;
+  avatar: IFile;
   page: number;
   lastId: number;
+  photoId: number;
   keyword: string;
   caption: string;
-  file: string;
+  file: IFile;
   hashtag: string;
+  payload: string;
 };
 export type Context = {
   loginUserToken: User;
@@ -37,7 +47,7 @@ export type Resolver = (
   root: IUser,
   args: IArgs,
   context: Context,
-  info: any,
+  info: GraphQLResolveInfo,
 ) => any;
 
 export type Resolvers = {

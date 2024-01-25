@@ -1,8 +1,11 @@
 import { Resolvers } from '../../types';
 import bcrypt from 'bcrypt';
 import { protectResolver } from '../user.utils';
+import { uploadS3 } from '../../shared/shared.utils';
+// import fs from 'fs';
 
 export default {
+  Upload: require('graphql-upload-ts').GraphQLUpload,
   Mutation: {
     editProfile: protectResolver(
       async (
@@ -10,7 +13,19 @@ export default {
         { firstName, lastName, password, bio, avatar },
         { loginUserToken, client },
       ) => {
-        console.log(avatar);
+        let avatarUrl = null;
+        const avatarFolder = 'avatars';
+        if (avatar) {
+          // const { filename, createReadStream } = await avatar;
+          // const newFileName = `${loginUserToken.userName}_${Date.now()}_${filename}`;
+          // const readStream = createReadStream();
+          // const writeStream = fs.createWriteStream(
+          //   process.cwd() + '/uploads/' + newFileName,
+          // );
+          // readStream.pipe(writeStream);
+          // avatarUrl = `http://localhost:4000/static/${newFileName}`;
+          avatarUrl = await uploadS3(avatar, loginUserToken, avatarFolder);
+        }
         let hashPw;
         if (password) {
           hashPw = await bcrypt.hash(password, 10);
@@ -20,9 +35,9 @@ export default {
           data: {
             firstName,
             lastName,
-            password: hashPw ?? password,
+            password: hashPw,
             bio,
-            avatar,
+            avatar: avatarUrl,
           },
         });
         if (isUpdate) {

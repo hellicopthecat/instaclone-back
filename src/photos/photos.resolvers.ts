@@ -10,6 +10,15 @@ export default {
     },
     totalLikes: async ({ id }, _, { client }) =>
       await client.like.count({ where: { photoId: id } }),
+    comments: ({ id }, __, { client }) =>
+      client.comment.count({ where: { photoId: id } }),
+    owner: ({ userId }, __, { loginUserToken }) => {
+      if (!loginUserToken) {
+        return false;
+      } else {
+        return userId === loginUserToken.id;
+      }
+    },
   },
   Hashtag: {
     photos: async ({ id }, { page }, { client }) => {

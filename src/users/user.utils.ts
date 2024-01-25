@@ -1,6 +1,7 @@
 import jwt, { JwtPayload } from 'jsonwebtoken';
 import client from '../client';
-import { Context, IArgs, Resolver } from '../types';
+import { Context, IArgs, IUser, Resolver } from '../types';
+import { GraphQLResolveInfo } from 'graphql';
 export const getUser = async (token: any) => {
   try {
     if (!token) {
@@ -23,12 +24,17 @@ export const getUser = async (token: any) => {
 
 export const protectResolver =
   (resolvers: Resolver) =>
-  (root: any, args: IArgs, context: Context, info: any) => {
+  (root: IUser, args: IArgs, context: Context, info: GraphQLResolveInfo) => {
     if (!context.loginUserToken) {
-      return {
-        ok: false,
-        error: '로그인하세요.',
-      };
+      const query = info.operation.operation === 'query';
+      if (query) {
+        return null;
+      } else {
+        return {
+          ok: false,
+          error: '로그인하세요.',
+        };
+      }
     }
     return resolvers(root, args, context, info);
   };

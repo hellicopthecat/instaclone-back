@@ -8,6 +8,8 @@ type Photo{
     caption:String
     hashtags:[Hashtag]
     totalLikes:Int!
+    owner:Boolean!
+    comments:Int!
 }
 type Hashtag{
     id:String!
