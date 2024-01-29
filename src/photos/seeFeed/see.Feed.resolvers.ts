@@ -1,8 +1,9 @@
+import client from '../../client';
 import { protectResolver } from '../../users/user.utils';
 
 export default {
   Query: {
-    seeFeed: protectResolver(async (_, __, { loginUserToken, client }) => {
+    seeFeed: protectResolver(async (_, __, { loginUserToken }) => {
       await client.photo.findMany({
         where: {
           OR: [

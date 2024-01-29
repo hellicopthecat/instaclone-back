@@ -32,6 +32,8 @@ export type IArgs = {
   page: number;
   lastId: number;
   photoId: number;
+  roomId: number;
+  userId: number;
   keyword: string;
   caption: string;
   file: IFile;
@@ -40,7 +42,6 @@ export type IArgs = {
 };
 export type Context = {
   loginUserToken: User;
-  client: PrismaClient;
 };
 
 export type Resolver = (

@@ -1,3 +1,4 @@
+import client from '../../client';
 import { Resolvers } from '../../types';
 import bcrypt from 'bcrypt';
 
@@ -6,7 +7,6 @@ export default {
     createUser: async (
       _,
       { userName, firstName, lastName, email, password },
-      { client },
     ) => {
       try {
         const userExists = await client.user.findFirst({

@@ -1,9 +1,10 @@
+import client from '../../client';
 import { protectResolver } from '../../users/user.utils';
 
 export default {
   Mutation: {
     createComment: protectResolver(
-      async (_, { photoId, payload }, { loginUserToken, client }) => {
+      async (_, { photoId, payload }, { loginUserToken }) => {
         const ok = await client.photo.findUnique({
           where: { id: photoId },
           select: { id: true },

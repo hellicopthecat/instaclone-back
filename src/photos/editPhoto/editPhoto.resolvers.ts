@@ -1,10 +1,11 @@
+import client from '../../client';
 import { protectResolver } from '../../users/user.utils';
 import { makeHashtags } from '../photo.utils';
 
 export default {
   Mutation: {
     editPhoto: protectResolver(
-      async (_, { id, caption }, { loginUserToken, client }) => {
+      async (_, { id, caption }, { loginUserToken }) => {
         const oldPhoto = await client.photo.findFirst({
           where: { id, userId: loginUserToken.id },
           include: { hashtags: true },

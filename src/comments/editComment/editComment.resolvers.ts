@@ -1,9 +1,10 @@
+import client from '../../client';
 import { protectResolver } from '../../users/user.utils';
 
 export default {
   Mutation: {
     editComment: protectResolver(
-      async (_, { id, payload }, { loginUserToken, client }) => {
+      async (_, { id, payload }, { loginUserToken }) => {
         const existsComment = await client.comment.findUnique({
           where: { id },
           select: { userId: true },

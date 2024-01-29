@@ -1,8 +1,9 @@
+import client from '../../client';
 import { Resolvers } from '../../types';
 
 export default {
   Query: {
-    seePhotoLikes: async (_, { id }, { client }) => {
+    seePhotoLikes: async (_, { id }) => {
       const likes = await client.like.findMany({
         where: { photoId: id },
         select: { user: true },

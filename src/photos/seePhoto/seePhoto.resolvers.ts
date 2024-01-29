@@ -1,9 +1,10 @@
+import client from '../../client';
 import { Resolvers } from '../../types';
 
 export default {
   Query: {
-    seePhoto: (_, { id }, { client }) => {
-      return client.photo.findUnique({ where: { id } });
+    seePhoto: async (_, { id }) => {
+      return await client.photo.findUnique({ where: { id } });
     },
   },
 } as Resolvers;

@@ -2,6 +2,7 @@ import { Resolvers } from '../../types';
 import bcrypt from 'bcrypt';
 import { protectResolver } from '../user.utils';
 import { uploadS3 } from '../../shared/shared.utils';
+import client from '../../client';
 // import fs from 'fs';
 
 export default {
@@ -11,7 +12,7 @@ export default {
       async (
         _,
         { firstName, lastName, password, bio, avatar },
-        { loginUserToken, client },
+        { loginUserToken },
       ) => {
         let avatarUrl = null;
         const avatarFolder = 'avatars';

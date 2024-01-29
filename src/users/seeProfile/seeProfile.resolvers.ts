@@ -1,9 +1,10 @@
+import client from '../../client';
 import { Resolvers } from '../../types';
 
 export default {
   Query: {
-    user: (_, { userName }, { client }) =>
-      client.user.findUnique({
+    user: async (_, { userName }) =>
+      await client.user.findUnique({
         where: { userName },
         include: { following: true, followers: true },
       }),

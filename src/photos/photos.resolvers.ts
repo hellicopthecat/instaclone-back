@@ -1,17 +1,17 @@
+import client from '../client';
 import { Resolvers } from '../types';
 
 export default {
   Photo: {
-    user: ({ userId }, _, { client }) => {
+    user: ({ userId }, __) => {
       return client.user.findUnique({ where: { id: userId } });
     },
-    hashtags: ({ id }, _, { client }) => {
+    hashtags: ({ id }, __) => {
       return client.hashtag.findMany({ where: { photos: { some: { id } } } });
     },
-    totalLikes: async ({ id }, _, { client }) =>
+    totalLikes: async ({ id }, __) =>
       await client.like.count({ where: { photoId: id } }),
-    comments: ({ id }, __, { client }) =>
-      client.comment.count({ where: { photoId: id } }),
+    comments: ({ id }, __) => client.comment.count({ where: { photoId: id } }),
     owner: ({ userId }, __, { loginUserToken }) => {
       if (!loginUserToken) {
         return false;
@@ -21,13 +21,13 @@ export default {
     },
   },
   Hashtag: {
-    photos: async ({ id }, { page }, { client }) => {
+    photos: async ({ id }, { page }) => {
       return await client.hashtag.findUnique({ where: { id } }).photos({
         take: page,
         skip: 10,
       });
     },
-    totalPhoto: async ({ id }, _, { client }) =>
+    totalPhoto: async ({ id }, __) =>
       await client.photo.count({ where: { hashtags: { some: { id } } } }),
   },
 } as Resolvers;
