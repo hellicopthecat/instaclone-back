@@ -35,8 +35,7 @@ const serverCleanup = useServer(
       if (!tokenExists) {
         throw new Error('접근할 수 없습니다.');
       }
-      const loginUserToken = await getUser(tokenExists);
-      return { loginUserToken };
+      return { loginUserToken: await getUser(tokenExists) };
     },
     onDisconnect(ctx, code, reason) {
       return;
@@ -65,7 +64,7 @@ server.start().then(() => {
     '/graphql',
     graphqlUploadExpress({ maxFileSize: 1000000, maxFiles: 1 }),
     cors({
-      origin: ['http://localhost:4000/graphql'],
+      origin: ['http://localhost:4000/graphql', 'http://localhost:3000'],
       credentials: true,
       // exposedHeaders: ['Apollo-Require-Preflight', 'x-apollo-operation-name'],
     }),

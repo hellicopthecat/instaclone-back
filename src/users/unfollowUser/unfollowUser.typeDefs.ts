@@ -4,6 +4,6 @@ type UnfollowUserResult{
     error:String
 }
 type Mutation{
-    unFollowUser(userName:String!):UnfollowUserResult
+    unFollowUser(userName:String!):MutationResponse
 }
 `;

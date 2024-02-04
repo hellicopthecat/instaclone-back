@@ -26,6 +26,7 @@ export default {
           // readStream.pipe(writeStream);
           // avatarUrl = `http://localhost:4000/static/${newFileName}`;
           avatarUrl = await uploadS3(avatar, loginUserToken, avatarFolder);
+          console.log(avatar);
         }
         let hashPw;
         if (password) {

@@ -5,6 +5,6 @@ type loginResult{
     token:String
 }
 type Mutation{
-    login(userName:String!,password:String!):loginResult
+    login(userName:String!,password:String!):loginResult!
 }
 `;

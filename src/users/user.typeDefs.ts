@@ -9,7 +9,7 @@ type User{
     createAt:String!
     updatedAt:String!
     bio:String
-    avatar(file:Upload!):Upload
+    avatar:String
     photos:[Photo]
     follower:[User]
     following:[User]
