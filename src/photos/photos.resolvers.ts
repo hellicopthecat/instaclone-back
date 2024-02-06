@@ -11,7 +11,8 @@ export default {
     },
     totalLikes: async ({ id }, __) =>
       await client.like.count({ where: { photoId: id } }),
-    comments: ({ id }, __) => client.comment.count({ where: { photoId: id } }),
+    totalComments: async ({ id }, __) =>
+      await client.comment.count({ where: { photoId: id } }),
     owner: ({ userId }, __, { loginUserToken }) => {
       if (!loginUserToken) {
         return false;
@@ -19,6 +20,25 @@ export default {
         return userId === loginUserToken.id;
       }
     },
+    isLiked: async ({ id }, __, { loginUserToken }) => {
+      if (!loginUserToken) {
+        return false;
+      } else {
+        const ok = await client.like.findUnique({
+          where: { photoId_userId: { photoId: id, userId: loginUserToken.id } },
+          select: { id: true },
+        });
+        if (ok) {
+          return true;
+        }
+        return false;
+      }
+    },
+    comments: async ({ id }) =>
+      client.comment.findMany({
+        where: { photoId: id },
+        include: { user: true },
+      }),
   },
   Hashtag: {
     photos: async ({ id }, { page }) => {

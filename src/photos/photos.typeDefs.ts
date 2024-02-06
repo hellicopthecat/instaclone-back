@@ -1,6 +1,6 @@
 export default `#graphql
 type Photo{
-    id:String!
+    id:Int!
     createAt: String!
     updatedAt:String!
     user:User! 
@@ -9,7 +9,9 @@ type Photo{
     hashtags:[Hashtag]
     totalLikes:Int!
     owner:Boolean!
-    comments:Int!
+    isLiked:Boolean!
+    totalComments:Int!
+    comments:[Comment]
 }
 type Hashtag{
     id:String!

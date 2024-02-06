@@ -3,8 +3,8 @@ import { protectResolver } from '../../users/user.utils';
 
 export default {
   Query: {
-    seeFeed: protectResolver(async (_, __, { loginUserToken }) => {
-      await client.photo.findMany({
+    seeFeed: protectResolver((_, __, { loginUserToken }) =>
+      client.photo.findMany({
         where: {
           OR: [
             {
@@ -14,7 +14,7 @@ export default {
           ],
         },
         orderBy: { createAt: 'desc' },
-      });
-    }),
+      }),
+    ),
   },
 };
